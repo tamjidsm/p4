@@ -16,6 +16,13 @@ Route::get('/', function()
 	return View::make('hello');
 });
 
+Route::get('/home', function()
+{
+    return View::make('_master');
+});
+
+
+
 Route::get('/get-environment',function() {
 
     echo "Environment: ".App::environment();
@@ -79,3 +86,189 @@ Route::get('/debug', function() {
     echo '</pre>';
 
 });
+
+Route::get('/practice', function() {
+
+    $fruit = Array('Apples', 'Oranges', 'Pears');
+
+    echo Pre::render($fruit,'Fruit');
+
+});
+
+// CRUD
+//Create
+Route::get('/creating', function() {
+
+    # Instantiate a new Book model class
+    $blog = new Blog();
+
+    # Set 
+    $blog->title = 'There is something about Mary';
+    $blog->blogger = 'XYZ';
+    $blog->published = 2014;
+    $blog->text = 'asdfadfadfadf adfadfadfadf asdffadfaddff ';
+    $blog->category = 'Car';
+
+    # This is where the Eloquent ORM magic happens
+    $blog->save();
+
+    return 'A new blog post has been made!';
+
+});
+
+
+// reading
+Route::get('/reading', function() {
+
+    # The all() method will fetch all the rows from a Model/table
+    $blog = Blog::all();
+
+    # Make sure we have results before trying to print them...
+    if($blog->isEmpty() != TRUE) {
+
+        # Typically we'd pass $books to a View, but for quick and dirty demonstration, let's just output here...
+        foreach($blog as $blog) {
+            echo $blog->blogger.'<br>';
+        }
+    }
+    else {
+        return 'No Blogs found';
+    }
+
+});
+
+//updating
+Route::get('/updating', function() {
+
+    # First get a book to update
+    $blog = Blog::where('blogger', 'LIKE', '%aaa%')->first();
+
+    # If we found the book, update it
+    if($blog) {
+
+        # Give it a different title
+        $blog->title = 'Nothing about Mary';
+
+        # Save the changes
+        $blog->save();
+
+        return "Update complete";
+    }
+    else {
+        return "Blog not found, can't update.";
+    }
+
+});
+
+
+//deleting
+Route::get('/deleting', function() {
+
+    $blog =Blog::where('blogger', 'LIKE', '%ABC%')->first();
+
+    if($blog) {
+
+        # Goodbye!
+        $blog->delete();
+
+        return "Deletion complete;";
+
+    }
+    else {
+        return "Can't delete ";
+    }
+
+});
+
+
+// app/routes.php
+
+Route::get('/seed', function()
+{
+    $blog = new Blog();
+        $blog->title = 'There is something about Mary';
+    $blog->blogger = 'aaa';
+    $blog->published = 1999;
+    $blog->text = 'asdfadfadfadf adfadfadfadf asdffadfaddff ';
+    $blog->category = 'Car';
+    $blog->save();
+$blog = new Blog();
+            $blog->title = 'There is something about Mary';
+    $blog->blogger = 'bbb';
+    $blog->published = 1900;
+    $blog->text = 'asdfadfadfadf adfadfadfadf asdffadfaddff ';
+    $blog->category = 'Car';
+    $blog->save();
+$blog = new Blog();
+            $blog->title = 'There is something about Mary';
+    $blog->blogger = 'ccc';
+    $blog->published = 2011;
+    $blog->text = 'asdfadfadfadf adfadfadfadf asdffadfaddff ';
+    $blog->category = 'Car';
+    $blog->save();
+
+$blog = new Blog();
+            $blog->title = 'There is something about Mary';
+    $blog->blogger = 'ddd';
+    $blog->published = 2000;
+    $blog->text = 'asdfadfadfadf adfadfadfadf asdffadfaddff ';
+    $blog->category = 'Car';
+    $blog->save();
+
+     return "Test daata are inserted complete";
+   
+});
+
+
+Route::get('/add', function()
+{
+    return View::make('add_blog');
+});
+
+
+Route::post('/add', function() {
+
+    # Instantiate a new Book model class
+    $blog = new Blog();
+
+     var_damp ($_POST);
+    # Set 
+   // $blog->title = $_POST;
+    // $blog->blogger = 'XYZ';
+    // $blog->published = 2014;
+    // $blog->text = 'asdfadfadfadf adfadfadfadf asdffadfaddff ';
+    // $blog->category = 'Car';
+
+    # This is where the Eloquent ORM magic happens
+    // $blog->save();
+
+    return 'A new blog post has been made!';
+});
+
+
+Route::get('/adding', function()
+{
+    return View::make('add');
+});
+
+
+Route::post('/adding', array('before'=>'cfrs',
+    function() {
+
+    # Instantiate a new Book model class
+
+
+     // var_dump ($_POST);
+         $blog = new Blog();
+    # Set 
+    $blog->title = $_POST['title'];
+     $blog->blogger = $_POST['blogger'];
+     $blog->published = $_POST['published'];
+    // $blog->text = 'asdfadfadfadf adfadfadfadf asdffadfaddff ';
+    // $blog->category = 'Car';
+
+    # This is where the Eloquent ORM magic happens
+     $blog->save();
+
+    return Redirect::to('/adding');
+}));
