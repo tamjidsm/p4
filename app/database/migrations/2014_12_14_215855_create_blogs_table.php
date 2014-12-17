@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBooksTable extends Migration {
+class CreateBlogsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -23,21 +23,20 @@ class CreateBooksTable extends Migration {
         $table->timestamps();
 
         # The rest of the fields...
-        $table->string('title');
-        $table->string('blogger');
-        $table->string('text');
+        $table->text('title');
+        $table->integer('blogger_id')->unsigned();
+        $table->longText('text');
         $table->string('category');
         $table->integer('published');
 
-        # FYI: We're skipping the 'tags' field for now; more on that later.
-
+		$table->foreign('blogger_id')->references('id')->on('bloggers');
     });
 	}
 
 	/**
 	 * Reverse the migrations.
 	 *
-	 * @return void
+	 * @return vpopmail_del_domain(domain)
 	 */
 	public function down()
 	{

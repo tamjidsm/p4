@@ -1,14 +1,21 @@
 @extends('_master')
 @section('content')
 
-	<h1>Edit</h1>
-	<h2>eIDT THE BOOK</h2>
+	<h1>Add</h1>
+	<h2>Add The Blog</h2>
 
-	{{---- EDIT -----}}
+	{{---- add -----}}
 	{{ Form::open(array('url' => '/adding')) }}
-			{{ Form::text('title') }}
-			{{ Form::text('blogger') }}
-			{{ Form::text('published') }}
+			{{ Form::label('title','Blog Title') }}	
+			{{ Form::text('title'); }}
+			{{ Form::label('blogger_id', 'Blogger Name') }}
+			{{ Form::select('blogger_id', $bloggers); }}	
+
+			{{ Form::label('text','Post Content') }}	
+			{{ Form::text('text'); }}
+
+			{{ Form::label('published','Year of Post') }}	
+			{{ Form::text('published'); }}
 		{{ Form::submit('Save'); }}
 
 	{{ Form::close() }}

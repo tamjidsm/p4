@@ -28,7 +28,7 @@
 			{{ Form::select('blogger_id', $bloggers, $blog->blogger_id); }}
 		</div>
 
-		<div class='form-group'>
+			
 			{{ Form::label('published','Published Year (YYYY)') }}
 			{{ Form::text('published',$blog['published']); }}
 		</div>

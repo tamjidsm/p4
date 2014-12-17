@@ -24,10 +24,10 @@
 		<ul>
 		@if(Auth::check())
 			<li><a href='/logout'>Log out {{ Auth::user()->email; }}</a></li>
-			<li><a href='/blog'>All Blogs</a></li>
-			<li><a href='/blog/search'>Search Books (w/ Ajax)</a></li>
+			<li><a href='/allBlogs'>All Blogs</a></li>
+			<li><a href='/blog/search'>Search Blog (w/ Ajax)</a></li>
 			<li><a href='/category'>All category</a></li>
-			<li><a href='/blog/create'>+ Add Book</a></li>
+			<li><a href='/adding'>+ Add Blog</a></li>
 			<li><a href='/debug/routes'>Routes</a></li>
 		@else
 			<li><a href='/signup'>Sign up</a> or <a href='/login'>Log in</a></li>

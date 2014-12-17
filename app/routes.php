@@ -117,25 +117,6 @@ Route::get('/creating', function() {
 });
 
 
-// reading
-Route::get('/reading', function() {
-
-    # The all() method will fetch all the rows from a Model/table
-    $blog = Blog::all();
-
-    # Make sure we have results before trying to print them...
-    if($blog->isEmpty() != TRUE) {
-
-        # Typically we'd pass $books to a View, but for quick and dirty demonstration, let's just output here...
-        foreach($blog as $blog) {
-            echo $blog->blogger.'<br>';
-        }
-    }
-    else {
-        return 'No Blogs found';
-    }
-
-});
 
 //updating
 Route::get('/updating', function() {
@@ -245,10 +226,31 @@ Route::post('/add', function() {
     return 'A new blog post has been made!';
 });
 
+Route::get('/allBlogs', function()
+{
+
+    return View::make('blog_index');
+});
+
+// reading
+Route::get('/allBlogs', function() {
+            $format = Input::get('format', 'html');
+                    $query  = Input::get('query');
+                            $blogs = Blog::search($query);
+return View::make('blog_index') 
+                ->with('blogs', $blogs)
+                ->with('query', $query);            
+  
+});
 
 Route::get('/adding', function()
 {
-    return View::make('add');
+    $bloggers = Blogger::getIdNamePair(); 
+  
+        return View::make('add') 
+            ->with('bloggers',$bloggers); 
+            
+
 });
 
 
@@ -258,13 +260,13 @@ Route::post('/adding', array('before'=>'cfrs',
     # Instantiate a new Book model class
 
 
-     // var_dump ($_POST);
-         $blog = new Blog();
+     // var_dump ($_POST);  
+         $blog = new Blog();       
     # Set 
     $blog->title = $_POST['title'];
-     $blog->blogger = $_POST['blogger'];
+     $blog->blogger_id = $_POST['blogger_id'];
      $blog->published = $_POST['published'];
-    // $blog->text = 'asdfadfadfadf adfadfadfadf asdffadfaddff ';
+     $blog->text = $_POST['text'];;
     // $blog->category = 'Car';
 
     # This is where the Eloquent ORM magic happens
@@ -272,3 +274,79 @@ Route::post('/adding', array('before'=>'cfrs',
 
     return Redirect::to('/adding');
 }));
+
+//// signup get and post
+Route::get('/signup',
+    array(
+        'before' => 'guest',
+        function() {
+            return View::make('user_signup');
+        }
+    )
+);
+
+//signup post
+Route::post('/signup', 
+    array(
+        'before' => 'csrf', 
+        function() {
+
+            $user = new User;
+            $user->email    = Input::get('email');
+            $user->password = Hash::make(Input::get('password'));
+
+            # Try to add the user 
+            try {
+                $user->save();
+            }
+            # Fail
+            catch (Exception $e) {
+                return Redirect::to('/signup')->with('flash_message', 'Sign up failed; please try again.')->withInput();
+            }
+
+            # Log the user in
+            Auth::login($user);
+
+            return Redirect::to('/allBlogs')->with('flash_message', 'Welcome to Foobooks!');
+
+        }
+    )
+);
+
+/// loging in routes
+Route::get('/login',
+    array(
+        'before' => 'guest',
+        function() {
+            return View::make('user_login');
+        }
+    )
+);
+
+Route::post('/login', 
+    array(
+        'before' => 'csrf', 
+        function() {
+
+            $credentials = Input::only('email', 'password');
+
+            if (Auth::attempt($credentials, $remember = true)) {
+                return Redirect::intended('/adding')->with('flash_message', 'Welcome Back!');
+            }
+            else {
+                return Redirect::to('/login')->with('flash_message', 'Log in failed; please try again.');
+            }
+
+            return Redirect::to('login');
+        }
+    )
+);
+
+Route::get('/logout', function() {
+
+    # Log out
+    Auth::logout();
+
+   # Send them to the homepage
+return Redirect::to('/adding');
+    });
