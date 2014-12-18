@@ -1,7 +1,14 @@
 # Project 4 - donotrepeat.com
-this a blogging site for bloggers to keep the blogging contents.
+The users who input data into our application are eager to share their experience using this application to the web. They basically maintains the site. The users are happy to get feedback from readers and other writers about their posts. They want to clarify a problem and give details to it. They feel pleasure if their posts are viewed and liked by others. Users who input the content are trying to share an experience to others with the intention that it is helpful to other. They will actively appreciate to the readers for their feedback or give details if someone asked. At the same time, other users are who want to find what others experience over a particular situation or service or action. They actively search for similar post and seek knowledge/experience from others. They put comments and support or reject the post view as helpful or NOT-helpful. Some readers are silent readers and some are active reader who participates to a post by asking question and giving feedback to a post or add more details to that post. Some users will come to this application by searching in search engine for a review comment and then get out of the application once his/her desired content were found or not.
+
+
 #URL
 p4.donotrepeat.org
+
+
+# Code into github
+https://github.com/tamjidsm/p4 
+
 
 #Demo
 Jing demo is provided here
@@ -18,9 +25,6 @@ http://www.screencast.com/t/NDkQUzcPMc7
 7. From the edit page and perform Delete - DELETING Blog
 8. Log out at the end
 9. There are blog and blogger tables joined, users table is also present here.
-
-# Code into github
-https://github.com/tamjidsm/p4 
 
 
 
