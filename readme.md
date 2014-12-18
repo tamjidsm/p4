@@ -12,11 +12,12 @@ http://www.screencast.com/t/6Sp0LiBbVtLN
 1. Log into the system first
 2. Blogger are already added into the system, blogger can be added by admin at this point
 3. Click all blog to see all of the data -READING DATA
-4.Click Add blog to create data -Creating DATA
-5.Blog description, posted year, content, and blogger information add
-6.From the all blog page, go to edit page and perform editing - UPDATING Blog
-7.From the edit page and perform Delete - DELETING Blog
-8.Log out at the end
+4. Click Add blog to create data -Creating DATA
+5. Blog description, posted year, content, and blogger information add
+6. From the all blog page, go to edit page and perform editing - UPDATING Blog
+7. From the edit page and perform Delete - DELETING Blog
+8. Log out at the end
+9. There are blog and blogger tables joined, users table is also present here.
 
 
 
