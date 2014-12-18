@@ -189,39 +189,39 @@ Route::post('/blog/delete', array('before'=>'cfrs',
 
 // app/routes.php
 
-Route::get('/seed', function()
+Route::get('/seedblogger', function()
 {
-    $blog = new Blog();
-        $blog->title = 'There is something about Mary';
-    $blog->blogger = 'aaa';
-    $blog->published = 1999;
-    $blog->text = 'asdfadfadfadf adfadfadfadf asdffadfaddff ';
-    $blog->category = 'Car';
-    $blog->save();
-$blog = new Blog();
-            $blog->title = 'There is something about Mary';
-    $blog->blogger = 'bbb';
-    $blog->published = 1900;
-    $blog->text = 'asdfadfadfadf adfadfadfadf asdffadfaddff ';
-    $blog->category = 'Car';
-    $blog->save();
-$blog = new Blog();
-            $blog->title = 'There is something about Mary';
-    $blog->blogger = 'ccc';
-    $blog->published = 2011;
-    $blog->text = 'asdfadfadfadf adfadfadfadf asdffadfaddff ';
-    $blog->category = 'Car';
-    $blog->save();
+    $blogger = new Blogger();
+    
+    $blogger->id = 8;
+        $blogger->name = 'Mary Thomas';
+    $blogger->age = 47;
+    $blogger->gender = 1;
 
-$blog = new Blog();
-            $blog->title = 'There is something about Mary';
-    $blog->blogger = 'ddd';
-    $blog->published = 2000;
-    $blog->text = 'asdfadfadfadf adfadfadfadf asdffadfaddff ';
-    $blog->category = 'Car';
-    $blog->save();
+    $blogger->save();
 
-     return "Test daata are inserted complete";
+        $blogger->id = 9;
+        $blogger->name = 'Jeo Kellahar';
+    $blogger->age = 27;
+    $blogger->gender = 0;
+
+    $blogger->save();
+
+        $blogger->id = 11;
+        $blogger->name = 'Andrew Sollovan';
+    $blogger->age = 35;
+    $blogger->gender = 0;
+
+    $blogger->save();
+
+        $blogger->id = 12;
+        $blogger->name = 'Sm Tamjid';
+    $blogger->age = 35;
+    $blogger->gender = 10;
+
+    $blogger->save();
+
+     return "Bloggers are added for testing";
    
 });
 
