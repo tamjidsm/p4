@@ -14,7 +14,7 @@
 	<h2>{{{ $blog['title'] }}}</h2>
 
 	{{---- EDIT -----}}
-	{{ Form::open(array('url' => '/add')) }}
+	{{ Form::open(array('url' => '/updating')) }}
 
 		{{ Form::hidden('id',$blog['id']); }}
 
@@ -27,20 +27,15 @@
 			{{ Form::label('blogger_id', 'Blogger') }}
 			{{ Form::select('blogger_id', $bloggers, $blog->blogger_id); }}
 		</div>
-
+			{{ Form::label('text','Post Content') }}	
+			{{ Form::text('text',$blog['text']); }}
 			
 			{{ Form::label('published','Published Year (YYYY)') }}
 			{{ Form::text('published',$blog['published']); }}
 		</div>
 
 
-		<div class='form-group'>
-			@foreach($catelogs as $id => $catelog)
-				{{ Form::checkbox('catelogs[]', $id, $blog->catelogs->contains($id)); }} {{ $catelog }}
-				&nbsp;&nbsp;&nbsp;
-			@endforeach
-		</div>
-
+		
 		{{ Form::submit('Save'); }}
 
 	{{ Form::close() }}

@@ -1,5 +1,5 @@
 body {
-	padding:20px;
+	padding:25px;
 }
 
 .logo {
@@ -14,13 +14,13 @@ input[type=checkbox] {
 }
 
 .flash-message {
-	width:100%;
+	width:80%;
 	position:absolute;
 	top:0;
 	left:0;
-	background-color:yellow;
+	background-color: #99FFCC;
 	text-align:center;
-	padding:5px;
+	padding:10px;
 }
 
 nav ul {
@@ -44,12 +44,12 @@ a:link, a:visited, a:active, a:hover {
 }
 
 .cats {
-	color:grey;
-	font-family:consolas;
+	color:block;
+	font-family:Times, serif;
 }
 
 .blog {
-	border:1px solid #ccc;
+	border:1px solid #F6F6F6;
 	padding:10px;
 	padding-top:0px;
 	float:left;
@@ -61,10 +61,10 @@ a:link, a:visited, a:active, a:hover {
 }
 
 .cat {
-	background-color:#F8F8F8;
+	background-color:#F6F6F6;
 	padding:2px;
 	font-size:11px;
-	font-family:consolas;
+	font-family: Times, serif;;
 	margin:2px;
 	display:inline-block;
 }

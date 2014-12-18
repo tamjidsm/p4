@@ -2,7 +2,7 @@
 
 
 @section('title') 
-	Blogs 
+	All Blogs 
 @stop 
 
 
@@ -17,6 +17,7 @@
  	@endif 
  
 
+
  	@if(sizeof($blogs) == 0) 
  		No results 
  	@else 
@@ -26,17 +27,26 @@
  			<section class='blog'> 
  
 
+{{ Form::label('title','Blog header') }}	
+
  				<h2>{{ $blog['title'] }}</h2> 
  
 
  				<p> 
- 					<a href='/book/edit/{{$blog['id']}}'>Edit</a> 
+ 					<a href='/edit/{{$blog['id']}}'>Edit</a> 
+ 				</p>  
+ 							{{ Form::label('title','name of blogger') }}	
+
+ 				<p>
+ 					{{$bloggers[$blog['blogger_id'] ]}}
+
+ 				</p>
+{{ Form::label('title','Blog content') }}	
+
+				<p> 
+ 					{{ $blog['text'] }} 
  				</p> 
- 				<p> 
- 					<a href='/book/edit/{{$blog['id']}}'>Delete</a> 
- 				</p> 
- 
- 
+{{ Form::label('title','Blog Posted year') }}	
 
  				<p> 
  					{{ $blog['category'] }} ({{$blog['published']}}) 

@@ -13,7 +13,7 @@
 
 Route::get('/', function()
 {
-	return View::make('hello');
+	return View::make('index');
 });
 
 Route::get('/home', function()
@@ -116,50 +116,75 @@ Route::get('/creating', function() {
 
 });
 
-
+Route::get('/edit/{id}',function($id) { 
+ 
+        try { 
+ 
+            # Get all the authors (used in the author drop down) 
+            $bloggers = Blogger::getIdNamePair(); 
+ 
+            # Get this book and all of its associated tags 
+            $blog    = Blog::with('blogger')->findOrFail($id); 
+ 
+            # Get all the tags (not just the ones associated with this book) 
+            #$tags    = Tag::getIdNamePair(); 
+        } 
+        catch(exception $e) { 
+            return Redirect::to('/adding')->with('flash_message', 'Blog not found'); 
+        } 
+ 
+        return View::make('edit_blog')
+        ->with('blog', $blog) 
+            ->with('bloggers', $bloggers)             ;
+    
+    } );
 
 //updating
-Route::get('/updating', function() {
+Route::post('/updating', array('before'=>'cfrs',
+    function()
+ {
 
-    # First get a book to update
-    $blog = Blog::where('blogger', 'LIKE', '%aaa%')->first();
+ // var_dump ($_POST);  
+         $blog = new Blog();       
+    # Set 
+    $blog->title = $_POST['title'];
+     $blog->blogger_id = $_POST['blogger_id'];
+     $blog->published = $_POST['published'];
+     $blog->text = $_POST['text'];;
+    // $blog->category = 'Car';
 
-    # If we found the book, update it
-    if($blog) {
+    # This is where the Eloquent ORM magic happens
+     $blog->save();
+   
+ try { 
+        $blogd =Blog::where('id', 'LIKE', 'id')->first();
 
-        # Give it a different title
-        $blog->title = 'Nothing about Mary';
+         } 
+         catch(exception $e) { 
+             return Redirect::to('/adding')->with('flash_message', 'Blog not found'); 
+         } 
+        Blog::destroy(Input::get('id'));
+             return Redirect::to('/adding')->with('flash_message','Blog changes have been saved.'); 
 
-        # Save the changes
-        $blog->save();
-
-        return "Update complete";
-    }
-    else {
-        return "Blog not found, can't update.";
-    }
-
-});
+}));
 
 
-//deleting
-Route::get('/deleting', function() {
+Route::post('/blog/delete', array('before'=>'cfrs',
+    function()
+ {
 
-    $blog =Blog::where('blogger', 'LIKE', '%ABC%')->first();
+    try { 
+        $blogd =Blog::where('id', 'LIKE', 'id')->first();
 
-    if($blog) {
+        } 
+         catch(exception $e) { 
+             return Redirect::to('/adding')->with('flash_message', 'Blog not found'); 
+         } 
+        Blog::destroy(Input::get('id'));
+             return Redirect::to('/adding')->with('flash_message','Blog changes have been deleted.'); 
 
-        # Goodbye!
-        $blog->delete();
+}));
 
-        return "Deletion complete;";
-
-    }
-    else {
-        return "Can't delete ";
-    }
-
-});
 
 
 // app/routes.php
@@ -235,11 +260,15 @@ Route::get('/allBlogs', function()
 // reading
 Route::get('/allBlogs', function() {
             $format = Input::get('format', 'html');
-                    $query  = Input::get('query');
-                            $blogs = Blog::search($query);
-return View::make('blog_index') 
+            $query  = Input::get('query');
+            $blogs = Blog::search($query);
+                $bloggers = Blogger::getIdNamePair(); 
+
+        return View::make('blog_index') 
                 ->with('blogs', $blogs)
-                ->with('query', $query);            
+                ->with('query', $query)
+                ->with('bloggers', $bloggers);            
+            
   
 });
 
@@ -272,7 +301,7 @@ Route::post('/adding', array('before'=>'cfrs',
     # This is where the Eloquent ORM magic happens
      $blog->save();
 
-    return Redirect::to('/adding');
+    return Redirect::to('/adding')->with('flash_message', 'Your blog is added successfully!');
 }));
 
 //// signup get and post
@@ -301,13 +330,13 @@ Route::post('/signup',
             }
             # Fail
             catch (Exception $e) {
-                return Redirect::to('/signup')->with('flash_message', 'Sign up failed; please try again.')->withInput();
+                return Redirect::to('/signup')->with('flash_message', 'Sorry try again!')->withInput();
             }
 
             # Log the user in
             Auth::login($user);
 
-            return Redirect::to('/allBlogs')->with('flash_message', 'Welcome to Foobooks!');
+            return Redirect::to('/allBlogs')->with('flash_message', 'Welcome to Donotrepeat.com!');
 
         }
     )
@@ -331,10 +360,10 @@ Route::post('/login',
             $credentials = Input::only('email', 'password');
 
             if (Auth::attempt($credentials, $remember = true)) {
-                return Redirect::intended('/adding')->with('flash_message', 'Welcome Back!');
+                return Redirect::intended('/')->with('flash_message', 'Thanks, for coming back!');
             }
             else {
-                return Redirect::to('/login')->with('flash_message', 'Log in failed; please try again.');
+                return Redirect::to('/login')->with('flash_message', 'Opps! Try again.');
             }
 
             return Redirect::to('login');
@@ -348,5 +377,5 @@ Route::get('/logout', function() {
     Auth::logout();
 
    # Send them to the homepage
-return Redirect::to('/adding');
+return Redirect::to('/')->with('flash_message', 'Bye Bye!');;
     });
