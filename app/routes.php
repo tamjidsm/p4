@@ -99,7 +99,7 @@ Route::get('/practice', function() {
 //Create
 Route::get('/creating', function() {
 
-    # Instantiate a new Book model class
+    # Instantiate a new blog model class
     $blog = new Blog();
 
     # Set 
@@ -120,14 +120,11 @@ Route::get('/edit/{id}',function($id) {
  
         try { 
  
-            # Get all the authors (used in the author drop down) 
             $bloggers = Blogger::getIdNamePair(); 
  
-            # Get this book and all of its associated tags 
             $blog    = Blog::with('blogger')->findOrFail($id); 
  
             # Get all the tags (not just the ones associated with this book) 
-            #$tags    = Tag::getIdNamePair(); 
         } 
         catch(exception $e) { 
             return Redirect::to('/adding')->with('flash_message', 'Blog not found'); 
@@ -234,7 +231,7 @@ Route::get('/add', function()
 
 Route::post('/add', function() {
 
-    # Instantiate a new Book model class
+    # Instantiate a new blog model class
     $blog = new Blog();
 
      var_damp ($_POST);
@@ -286,7 +283,7 @@ Route::get('/adding', function()
 Route::post('/adding', array('before'=>'cfrs',
     function() {
 
-    # Instantiate a new Book model class
+    # Instantiate a new blog model class
 
 
      // var_dump ($_POST);  

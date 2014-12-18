@@ -19,7 +19,8 @@ http://www.screencast.com/t/NDkQUzcPMc7
 8. Log out at the end
 9. There are blog and blogger tables joined, users table is also present here.
 
-
+# Code into github
+https://github.com/tamjidsm/p4 
 
 
 

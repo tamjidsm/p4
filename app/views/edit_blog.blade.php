@@ -1,7 +1,7 @@
 @extends('_master')
 
 @section('title')
-	Edit
+	Edit blog
 @stop
 
 @section('head')
