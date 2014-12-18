@@ -336,7 +336,7 @@ Route::post('/signup',
             # Log the user in
             Auth::login($user);
 
-            return Redirect::to('/allBlogs')->with('flash_message', 'Welcome to Donotrepeat.com!');
+            return Redirect::to('/')->with('flash_message', 'Welcome to Donotrepeat.com!');
 
         }
     )
